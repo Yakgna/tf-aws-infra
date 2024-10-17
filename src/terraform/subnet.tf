@@ -8,7 +8,7 @@ resource "aws_subnet" "public_a" {
     aws_vpc.csye6225_vpc,
   ]
   vpc_id                  = aws_vpc.csye6225_vpc.id
-  cidr_block              = "10.0.1.0/24"
+  cidr_block              = var.cidr_pub_a
   availability_zone       = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = true
   tags = {
@@ -21,7 +21,7 @@ resource "aws_subnet" "public_b" {
     aws_vpc.csye6225_vpc,
   ]
   vpc_id                  = aws_vpc.csye6225_vpc.id
-  cidr_block              = "10.0.2.0/24"
+  cidr_block              = var.cidr_pub_b
   availability_zone       = data.aws_availability_zones.available.names[1]
   map_public_ip_on_launch = true
   tags = {
@@ -34,7 +34,7 @@ resource "aws_subnet" "public_c" {
     aws_vpc.csye6225_vpc,
   ]
   vpc_id                  = aws_vpc.csye6225_vpc.id
-  cidr_block              = "10.0.3.0/24"
+  cidr_block              = var.cidr_pub_c
   availability_zone       = data.aws_availability_zones.available.names[2]
   map_public_ip_on_launch = true
   tags = {
@@ -48,7 +48,7 @@ resource "aws_subnet" "private_a" {
     aws_vpc.csye6225_vpc,
   ]
   vpc_id            = aws_vpc.csye6225_vpc.id
-  cidr_block        = "10.0.4.0/24"
+  cidr_block        = var.cidr_priv_a
   availability_zone = data.aws_availability_zones.available.names[0]
   tags = {
     Name = "private-a"
@@ -60,7 +60,7 @@ resource "aws_subnet" "private_b" {
     aws_vpc.csye6225_vpc,
   ]
   vpc_id            = aws_vpc.csye6225_vpc.id
-  cidr_block        = "10.0.5.0/24"
+  cidr_block        = var.cidr_priv_b
   availability_zone = data.aws_availability_zones.available.names[1]
   tags = {
     Name = "private-b"
@@ -72,7 +72,7 @@ resource "aws_subnet" "private_c" {
     aws_vpc.csye6225_vpc,
   ]
   vpc_id            = aws_vpc.csye6225_vpc.id
-  cidr_block        = "10.0.6.0/24"
+  cidr_block        = var.cidr_priv_c
   availability_zone = data.aws_availability_zones.available.names[2]
   tags = {
     Name = "private-c"
