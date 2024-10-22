@@ -57,38 +57,16 @@ variable "ami_id" {
   type        = string
 }
 
-variable "cidr_pub_a" {
-  description = "Cidr for public subnet A"
-  type        = string
-  default     = "10.0.1.0/24"
+# Public subnet CIDR blocks
+variable "public_cidr_blocks" {
+  description = "CIDR blocks for public subnets"
+  type        = list(string)
+  default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 }
 
-variable "cidr_pub_b" {
-  description = "Cidr for public subnet B"
-  type        = string
-  default     = "10.0.2.0/24"
-}
-
-variable "cidr_pub_c" {
-  description = "Cidr for public subnet C"
-  type        = string
-  default     = "10.0.3.0/24"
-}
-
-variable "cidr_priv_a" {
-  description = "Cidr for private subnet A"
-  type        = string
-  default     = "10.0.4.0/24"
-}
-
-variable "cidr_priv_b" {
-  description = "Cidr for private subnet B"
-  type        = string
-  default     = "10.0.5.0/24"
-}
-
-variable "cidr_priv_c" {
-  description = "Cidr for private subnet C"
-  type        = string
-  default     = "10.0.6.0/24"
+# Private subnet CIDR blocks
+variable "private_cidr_blocks" {
+  description = "CIDR blocks for private subnets"
+  type        = list(string)
+  default     = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
 }

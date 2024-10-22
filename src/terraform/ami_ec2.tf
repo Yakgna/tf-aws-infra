@@ -47,7 +47,7 @@ resource "aws_instance" "web_app_instance" {
   ami                    = var.ami_id
   instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.application_security_group.id]
-  subnet_id              = aws_subnet.public_a.id
+  subnet_id              = aws_subnet.public[0].id
 
   root_block_device {
     volume_size           = 25
