@@ -103,15 +103,15 @@ variable "db_port" {
 
 output "ec2_instance_id" {
   description = "EC2 Instance Id"
-  value = aws_instance.web_app_instance.id
+  value       = aws_instance.web_app_instance.id
 }
 
 output "rds_address" {
   description = "RDS instance address"
-  value = aws_db_instance.csye6225_rds.address
+  value       = aws_db_instance.csye6225_rds.address
 }
 
 output "ec2_ip_address" {
   description = "EC2 Instance public IPv4 address"
-  value = aws_instance.web_app_instance.public_ip
+  value       = aws_instance.web_app_instance.public_ip
 }
