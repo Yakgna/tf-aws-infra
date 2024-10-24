@@ -57,38 +57,61 @@ variable "ami_id" {
   type        = string
 }
 
-variable "cidr_pub_a" {
-  description = "Cidr for public subnet A"
-  type        = string
-  default     = "10.0.1.0/24"
+# Public subnet CIDR blocks
+variable "public_cidr_blocks" {
+  description = "CIDR blocks for public subnets"
+  type        = list(string)
+  default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 }
 
-variable "cidr_pub_b" {
-  description = "Cidr for public subnet B"
-  type        = string
-  default     = "10.0.2.0/24"
+# Private subnet CIDR blocks
+variable "private_cidr_blocks" {
+  description = "CIDR blocks for private subnets"
+  type        = list(string)
+  default     = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
 }
 
-variable "cidr_pub_c" {
-  description = "Cidr for public subnet C"
+variable "db_username" {
+  description = "Username for postgres"
   type        = string
-  default     = "10.0.3.0/24"
+  default     = "csye6225"
 }
 
-variable "cidr_priv_a" {
-  description = "Cidr for private subnet A"
+variable "db_password" {
+  description = "Password for postgres"
   type        = string
-  default     = "10.0.4.0/24"
+  default     = "Clouddb2024"
 }
 
-variable "cidr_priv_b" {
-  description = "Cidr for private subnet B"
+variable "db_name" {
+  description = "Database name"
   type        = string
-  default     = "10.0.5.0/24"
+  default     = "csye6225"
 }
 
-variable "cidr_priv_c" {
-  description = "Cidr for private subnet C"
+variable "port" {
+  description = "Server port"
   type        = string
-  default     = "10.0.6.0/24"
+  default     = "8080"
+}
+
+variable "db_port" {
+  description = "Database port"
+  type        = string
+  default     = "5432"
+}
+
+output "ec2_instance_id" {
+  description = "EC2 Instance Id"
+  value       = aws_instance.web_app_instance.id
+}
+
+output "rds_address" {
+  description = "RDS instance address"
+  value       = aws_db_instance.csye6225_rds.address
+}
+
+output "ec2_ip_address" {
+  description = "EC2 Instance public IPv4 address"
+  value       = aws_instance.web_app_instance.public_ip
 }

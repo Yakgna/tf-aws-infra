@@ -47,7 +47,7 @@ resource "aws_instance" "web_app_instance" {
   ami                    = var.ami_id
   instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.application_security_group.id]
-  subnet_id              = aws_subnet.public_a.id
+  subnet_id              = aws_subnet.public[0].id
 
   root_block_device {
     volume_size           = 25
@@ -56,6 +56,20 @@ resource "aws_instance" "web_app_instance" {
   }
 
   disable_api_termination = false
+
+  user_data = <<-EOF
+    #!/bin/bash
+    echo "DB_HOST=${aws_db_instance.csye6225_rds.address}" >> /opt/webapp/backend/.env
+    echo "DB_PORT=${aws_db_instance.csye6225_rds.port}" >> /opt/webapp/backend/.env
+    echo "DB_USERNAME=${var.db_username}" >> /opt/webapp/backend/.env
+    echo "DB_PASSWORD=${var.db_password}" >> /opt/webapp/backend/.env
+    echo "DB_NAME=${var.db_name}" >> /opt/webapp/backend/.env
+    echo "PORT=${var.port}" >> /opt/webapp/backend/.env
+    echo "DATABASE=${aws_db_instance.csye6225_rds.db_name}" >> /opt/webapp/backend/.env
+
+    #Give required permissions
+    sudo chown -R csye6225:csye6225 /opt/webapp/backend/.env
+  EOF
 
   tags = {
     Name = "Webapp Instance"
