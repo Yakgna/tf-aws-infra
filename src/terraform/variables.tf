@@ -70,3 +70,48 @@ variable "private_cidr_blocks" {
   type        = list(string)
   default     = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
 }
+
+variable "db_username" {
+  description = "Username for postgres"
+  type        = string
+  default     = "csye6225"
+}
+
+variable "db_password" {
+  description = "Password for postgres"
+  type        = string
+  default     = "Clouddb2024"
+}
+
+variable "db_name" {
+  description = "Database name"
+  type        = string
+  default     = "csye6225"
+}
+
+variable "port" {
+  description = "Server port"
+  type        = string
+  default     = "8080"
+}
+
+variable "db_port" {
+  description = "Database port"
+  type        = string
+  default     = "5432"
+}
+
+output "ec2_instance_id" {
+  description = "EC2 Instance Id"
+  value = aws_instance.web_app_instance.id
+}
+
+output "rds_address" {
+  description = "RDS instance address"
+  value = aws_db_instance.csye6225_rds.address
+}
+
+output "ec2_ip_address" {
+  description = "EC2 Instance public IPv4 address"
+  value = aws_instance.web_app_instance.public_ip
+}
