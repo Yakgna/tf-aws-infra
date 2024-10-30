@@ -2,6 +2,10 @@ variable "profile" {
   description = "The profile to use for VPC"
   type        = string
   default     = "dev"
+  validation {
+    condition     = contains(["dev", "demo"], var.profile)
+    error_message = "Environment must be either 'dev' or 'demo'."
+  }
 }
 
 variable "project_name" {
@@ -101,6 +105,18 @@ variable "db_port" {
   default     = "5432"
 }
 
+variable "domain_name" {
+  type        = string
+  description = "Domain name for the application"
+  default     = "clouddyve.me"
+}
+
+variable "zone_id" {
+  type        = string
+  description = "Main domain hosted zone id"
+  default     = "Z02896342H5CE500OOH6V"
+}
+
 output "ec2_instance_id" {
   description = "EC2 Instance Id"
   value       = aws_instance.web_app_instance.id
@@ -114,4 +130,9 @@ output "rds_address" {
 output "ec2_ip_address" {
   description = "EC2 Instance public IPv4 address"
   value       = aws_instance.web_app_instance.public_ip
+}
+
+output "s3_bucket_name" {
+  description = "S3 Bucket Name"
+  value       = aws_s3_bucket.csye6225_bucket.bucket
 }
