@@ -21,30 +21,45 @@ resource "aws_iam_policy" "csye6225_iam_policy" {
   description = "Policy for CloudWatch agent and S3 access"
 
   policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
-        "Effect": "Allow",
-        "Action": [
-          "ec2:DescribeTags",
+        "Sid" : "CWACloudWatchServerPermissions",
+        "Effect" : "Allow",
+        "Action" : [
           "cloudwatch:PutMetricData",
-          "cloudwatch:GetMetricData",
-          "cloudwatch:GetMetricStatistics",
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
+          "ec2:DescribeVolumes",
+          "ec2:DescribeTags",
           "logs:PutLogEvents",
-          "logs:DescribeLogStreams"
+          "logs:PutRetentionPolicy",
+          "logs:DescribeLogStreams",
+          "logs:DescribeLogGroups",
+          "logs:CreateLogStream",
+          "logs:CreateLogGroup",
+          "xray:PutTraceSegments",
+          "xray:PutTelemetryRecords",
+          "xray:GetSamplingRules",
+          "xray:GetSamplingTargets",
+          "xray:GetSamplingStatisticSummaries"
         ],
-        "Resource": "*"
+        "Resource" : "*"
       },
       {
-        "Effect": "Allow",
-        "Action": [
+        "Sid" : "CWASSMServerPermissions",
+        "Effect" : "Allow",
+        "Action" : [
+          "ssm:GetParameter"
+        ],
+        "Resource" : "arn:aws:ssm:*:*:parameter/AmazonCloudWatch-*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
           "s3:PutObject",
           "s3:GetObject",
           "s3:DeleteObject"
         ],
-        "Resource": "arn:aws:s3:::csye6255-b2e80959-7f0d-4f2d-90de-ac9fe246b050/*"
+        "Resource" : "arn:aws:s3:::csye6255-b2e80959-7f0d-4f2d-90de-ac9fe246b050/*"
       }
     ]
   })
