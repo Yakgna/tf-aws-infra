@@ -58,16 +58,18 @@ resource "aws_instance" "web_app_instance" {
   disable_api_termination = false
 
   # Attach IAM role for use with CloudWatch Agent
-  iam_instance_profile = aws_iam_instance_profile.csye6225_cwagent_profile.name
+  iam_instance_profile = aws_iam_instance_profile.csye6225_iam_profile.name
 
   user_data = templatefile("./user_data.sh", {
-    DB_HOST     = aws_db_instance.csye6225_rds.address
-    DB_PORT     = aws_db_instance.csye6225_rds.port
-    DB_USERNAME = var.db_username
-    DB_PASSWORD = var.db_password
-    DB_NAME     = var.db_name
-    PORT        = var.port
-    DATABASE    = aws_db_instance.csye6225_rds.db_name
+    DB_HOST        = aws_db_instance.csye6225_rds.address
+    DB_PORT        = aws_db_instance.csye6225_rds.port
+    DB_USERNAME    = var.db_username
+    DB_PASSWORD    = var.db_password
+    DB_NAME        = var.db_name
+    PORT           = var.port
+    DATABASE       = aws_db_instance.csye6225_rds.db_name
+    S3_BUCKET_NAME = aws_s3_bucket.csye6225_bucket.bucket
+    AWS_REGION     = var.region
   })
 
   tags = {
