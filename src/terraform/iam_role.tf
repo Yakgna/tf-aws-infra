@@ -59,7 +59,7 @@ resource "aws_iam_policy" "csye6225_iam_policy" {
           "s3:GetObject",
           "s3:DeleteObject"
         ],
-        "Resource" : "arn:aws:s3:::csye6255-b2e80959-7f0d-4f2d-90de-ac9fe246b050/*"
+        "Resource" : "${aws_s3_bucket.csye6225_bucket.arn}/*"
       }
     ]
   })
