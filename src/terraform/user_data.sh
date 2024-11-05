@@ -12,7 +12,11 @@ echo "AWS_REGION=${AWS_REGION}" >> /opt/webapp/backend/.env
 #Give required permissions
 sudo chown -R csye6225:csye6225 /opt/webapp/backend/.env
 
+sudo systemctl daemon-reload
+sudo systemctl restart csye6225
+
 # Start the CloudWatch Agent
 /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
-
-sudo systemctl restart amazon-cloudwatch-agent
+# Start CloudWatch Agent on boot
+sudo systemctl enable amazon-cloudwatch-agent
+sudo systemctl start amazon-cloudwatch-agent
