@@ -117,19 +117,20 @@ variable "zone_id" {
   default     = "Z02896342H5CE500OOH6V"
 }
 
-output "ec2_instance_id" {
-  description = "EC2 Instance Id"
-  value       = aws_instance.web_app_instance.id
+variable "aws_key_name" {
+  type        = string
+  description = "Domain name for the application"
+  default     = "my_windows_laptop"
+}
+
+variable "app_port" {
+  description = "Application port"
+  default     = 8080
 }
 
 output "rds_address" {
   description = "RDS instance address"
   value       = aws_db_instance.csye6225_rds.address
-}
-
-output "ec2_ip_address" {
-  description = "EC2 Instance public IPv4 address"
-  value       = aws_instance.web_app_instance.public_ip
 }
 
 output "s3_bucket_name" {
