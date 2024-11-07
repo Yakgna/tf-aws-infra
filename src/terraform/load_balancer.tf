@@ -51,3 +51,34 @@ resource "aws_lb_listener" "app_lb_listener" {
     target_group_arn = aws_lb_target_group.app_target_group.arn
   }
 }
+
+# Load Balancer Security Group
+resource "aws_security_group" "load_balancer_sg" {
+  name        = "load_balancer_sg"
+  description = "Security group for Load balancer"
+  vpc_id      = aws_vpc.csye6225_vpc.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = var.ingress_cidr_80
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = var.ingress_cidr_443
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "Load Balancer Security Group"
+  }
+}

@@ -29,37 +29,6 @@ resource "aws_security_group" "application_security_group" {
   }
 }
 
-# Load Balancer Security Group
-resource "aws_security_group" "load_balancer_sg" {
-  name        = "load_balancer_sg"
-  description = "Security group for Load balancer"
-  vpc_id      = aws_vpc.csye6225_vpc.id
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = var.ingress_cidr_80
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = var.ingress_cidr_443
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "Load Balancer Security Group"
-  }
-}
-
 # Launch Template
 resource "aws_launch_template" "web_app_template" {
   name = "csye6225_asg_template"
