@@ -8,6 +8,7 @@ echo "PORT=${PORT}" >> /opt/webapp/backend/.env
 echo "DATABASE=${DATABASE}" >> /opt/webapp/backend/.env
 echo "S3_BUCKET_NAME=${S3_BUCKET_NAME}" >> /opt/webapp/backend/.env
 echo "AWS_REGION=${AWS_REGION}" >> /opt/webapp/backend/.env
+echo "SNS_TOPIC_ARN=${SNS_TOPIC_ARN}" >> /opt/webapp/backend/.env
 
 #Give required permissions
 sudo chown -R csye6225:csye6225 /opt/webapp/backend/.env

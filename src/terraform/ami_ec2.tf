@@ -56,5 +56,6 @@ resource "aws_launch_template" "web_app_template" {
     DATABASE       = aws_db_instance.csye6225_rds.db_name
     S3_BUCKET_NAME = aws_s3_bucket.csye6225_bucket.bucket
     AWS_REGION     = var.region
+    SNS_TOPIC_ARN  = aws_sns_topic.user_verification_topic.arn
   }))
 }
