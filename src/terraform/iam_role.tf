@@ -60,6 +60,11 @@ resource "aws_iam_policy" "csye6225_iam_policy" {
           "s3:DeleteObject"
         ],
         "Resource" : "${aws_s3_bucket.csye6225_bucket.arn}/*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : "sns:Publish",
+        "Resource" : aws_sns_topic.user_verification_topic.arn
       }
     ]
   })

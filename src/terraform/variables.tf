@@ -128,6 +128,10 @@ variable "app_port" {
   default     = 8080
 }
 
+variable "send_grid_api_key" {
+  description = "SendGrid API key"
+}
+
 output "rds_address" {
   description = "RDS instance address"
   value       = aws_db_instance.csye6225_rds.address
