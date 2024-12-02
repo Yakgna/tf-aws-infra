@@ -132,6 +132,11 @@ variable "send_grid_api_key" {
   description = "SendGrid API key"
 }
 
+variable "ssl_certificate" {
+  description = "SSL certificate arn"
+}
+
+
 output "rds_address" {
   description = "RDS instance address"
   value       = aws_db_instance.csye6225_rds.address
@@ -140,4 +145,9 @@ output "rds_address" {
 output "s3_bucket_name" {
   description = "S3 Bucket Name"
   value       = aws_s3_bucket.csye6225_bucket.bucket
+}
+
+output "db_password_secret" {
+  description = "DB Password Secret ID"
+  value       = aws_secretsmanager_secret.db_password_secret.id
 }

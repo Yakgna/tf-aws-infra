@@ -46,11 +46,26 @@ resource "aws_launch_template" "web_app_template" {
     delete_on_termination       = true
   }
 
+  block_device_mappings {
+    device_name = "/dev/sda1"
+    ebs {
+      volume_size           = 8
+      volume_type           = "gp3"
+      encrypted             = true
+      kms_key_id            = aws_kms_key.ec2_kms.arn
+      delete_on_termination = true
+    }
+  }
+
+  depends_on = [
+    aws_kms_key.ec2_kms
+  ]
+
   user_data = base64encode(templatefile("./user_data.sh", {
     DB_HOST        = aws_db_instance.csye6225_rds.address
     DB_PORT        = aws_db_instance.csye6225_rds.port
     DB_USERNAME    = var.db_username
-    DB_PASSWORD    = var.db_password
+    DB_PASSWORD_ID = aws_secretsmanager_secret.db_password_secret.id
     DB_NAME        = var.db_name
     PORT           = var.port
     DATABASE       = aws_db_instance.csye6225_rds.db_name
