@@ -2,7 +2,11 @@
 echo "DB_HOST=${DB_HOST}" >> /opt/webapp/backend/.env
 echo "DB_PORT=${DB_PORT}" >> /opt/webapp/backend/.env
 echo "DB_USERNAME=${DB_USERNAME}" >> /opt/webapp/backend/.env
-echo "DB_PASSWORD=${DB_PASSWORD}" >> /opt/webapp/backend/.env
+echo "DB_PASSWORD=$(aws secretsmanager get-secret-value \
+                       --secret-id ${DB_PASSWORD_ID} \
+                       --region ${AWS_REGION} \
+                       --query 'SecretString' \
+                       --output text)" >> /opt/webapp/backend/.env
 echo "DB_NAME=${DB_NAME}" >> /opt/webapp/backend/.env
 echo "PORT=${PORT}" >> /opt/webapp/backend/.env
 echo "DATABASE=${DATABASE}" >> /opt/webapp/backend/.env

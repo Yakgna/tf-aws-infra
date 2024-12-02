@@ -65,6 +65,26 @@ resource "aws_iam_policy" "csye6225_iam_policy" {
         "Effect" : "Allow",
         "Action" : "sns:Publish",
         "Resource" : aws_sns_topic.user_verification_topic.arn
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue",
+        ]
+        Resource = aws_secretsmanager_secret.db_password_secret.arn
+
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey",
+          "kms:CreateGrant"
+        ],
+        Resource = aws_kms_key.ec2_kms.arn
       }
     ]
   })

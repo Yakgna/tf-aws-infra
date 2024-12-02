@@ -69,7 +69,18 @@ resource "aws_iam_policy" "email_verification_policy" {
           "sns:Subscribe"
         ]
         Resource = aws_sns_topic.user_verification_topic.arn
-      }
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue",
+          "kms:Decrypt"
+        ]
+        Resource = [
+          aws_secretsmanager_secret.email_cred.arn,
+          aws_kms_key.sm_kms.arn
+        ]
+      },
     ]
   })
 }
@@ -88,15 +99,15 @@ resource "aws_lambda_function" "email_verification_lambda" {
   runtime       = "nodejs20.x"
   environment {
     variables = {
-      SENDGRID_API_KEY = var.send_grid_api_key
-      DB_PORT          = aws_db_instance.csye6225_rds.port
-      PORT             = var.app_port
-      DB_USERNAME      = var.db_username
-      DB_PASSWORD      = var.db_password
-      DATABASE         = aws_db_instance.csye6225_rds.db_name
-      DB_HOST          = aws_db_instance.csye6225_rds.address
-      ENVIRONMENT      = var.profile
-      DOMAIN_NAME      = var.domain_name
+      SENDGRID_API_NAME = aws_secretsmanager_secret.email_cred.name
+      DB_PORT           = aws_db_instance.csye6225_rds.port
+      PORT              = var.app_port
+      DB_USERNAME       = var.db_username
+      DB_PASSWORD       = var.db_password
+      DATABASE          = aws_db_instance.csye6225_rds.db_name
+      DB_HOST           = aws_db_instance.csye6225_rds.address
+      ENVIRONMENT       = var.profile
+      DOMAIN_NAME       = var.domain_name
     }
   }
   depends_on = [aws_iam_role_policy_attachment.attach_lambda_policies]

@@ -59,7 +59,9 @@ resource "aws_db_instance" "csye6225_rds" {
   #Database configuration
   db_name  = var.db_name
   username = var.db_username
-  password = var.db_password
+  password = random_password.db_password.result
+  kms_key_id             = aws_kms_key.rds_kms.arn
+  storage_encrypted      = true
 
   parameter_group_name   = aws_db_parameter_group.postgresql_params.name
   vpc_security_group_ids = [aws_security_group.database_security_group.id]
