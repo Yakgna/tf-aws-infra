@@ -57,3 +57,8 @@ This repository contains Terraform configuration files to manage and provision i
    ```bash
    terraform apply
    ```
+## Importing Certificate
+Run the below command to import the certificate.
+```bash
+    aws acm import-certificate --certificate fileb://certificate.crt --private-key fileb://private.key --certificate-chain fileb://ca_bundle.crt --region us-east-1
+```

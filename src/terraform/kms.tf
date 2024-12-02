@@ -48,6 +48,23 @@ resource "aws_kms_key" "ec2_kms" {
           "kms:CreateGrant"
         ]
         Resource = "*"
+      },
+      {
+        Sid    = "Allow Secrets Manager to use the key"
+        Effect = "Allow"
+        Principal = {
+          Service = "secretsmanager.amazonaws.com"
+        }
+        Action = [
+          "kms:Decrypt",
+          "kms:GenerateDataKey*"
+        ]
+        Resource = "*"
+        Condition = {
+          StringEquals = {
+            "kms:ViaService": "secretsmanager.${var.region}.amazonaws.com"
+          }
+        }
       }
     ]
   })
@@ -194,7 +211,9 @@ resource "aws_secretsmanager_secret" "email_cred" {
 
 resource "aws_secretsmanager_secret_version" "email_cred" {
   secret_id     = aws_secretsmanager_secret.email_cred.id
-  secret_string = var.send_grid_api_key
+  secret_string = jsonencode({
+    api_key = var.send_grid_api_key
+  })
 }
 
 resource "random_password" "db_password" {

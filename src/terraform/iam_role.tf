@@ -67,16 +67,9 @@ resource "aws_iam_policy" "csye6225_iam_policy" {
         "Resource" : aws_sns_topic.user_verification_topic.arn
       },
       {
-        Effect = "Allow"
-        Action = [
-          "secretsmanager:GetSecretValue",
-        ]
-        Resource = aws_secretsmanager_secret.db_password_secret.arn
-
-      },
-      {
         Effect = "Allow",
         Action = [
+          "secretsmanager:GetSecretValue",
           "kms:Encrypt",
           "kms:Decrypt",
           "kms:ReEncrypt*",
@@ -84,7 +77,11 @@ resource "aws_iam_policy" "csye6225_iam_policy" {
           "kms:DescribeKey",
           "kms:CreateGrant"
         ],
-        Resource = aws_kms_key.ec2_kms.arn
+        Resource = [
+          aws_kms_key.ec2_kms.arn,
+          aws_kms_key.sm_kms.arn,
+          aws_secretsmanager_secret.db_password_secret.arn
+        ]
       }
     ]
   })
