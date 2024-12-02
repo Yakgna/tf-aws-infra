@@ -62,7 +62,7 @@ resource "aws_kms_key" "ec2_kms" {
         Resource = "*"
         Condition = {
           StringEquals = {
-            "kms:ViaService": "secretsmanager.${var.region}.amazonaws.com"
+            "kms:ViaService" : "secretsmanager.${var.region}.amazonaws.com"
           }
         }
       }
@@ -210,14 +210,14 @@ resource "aws_secretsmanager_secret" "email_cred" {
 }
 
 resource "aws_secretsmanager_secret_version" "email_cred" {
-  secret_id     = aws_secretsmanager_secret.email_cred.id
+  secret_id = aws_secretsmanager_secret.email_cred.id
   secret_string = jsonencode({
     api_key = var.send_grid_api_key
   })
 }
 
 resource "random_password" "db_password" {
-  length  = 16
-  special = true
+  length           = 16
+  special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
