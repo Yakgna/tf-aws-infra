@@ -75,11 +75,14 @@ resource "aws_iam_policy" "csye6225_iam_policy" {
           "kms:ReEncrypt*",
           "kms:GenerateDataKey*",
           "kms:DescribeKey",
-          "kms:CreateGrant"
+          "kms:CreateGrant",
+          "kms:ListGrants",
+          "kms:RevokeGrant"
         ],
         Resource = [
           aws_kms_key.ec2_kms.arn,
           aws_kms_key.sm_kms.arn,
+          aws_kms_key.s3_kms.arn,
           aws_secretsmanager_secret.db_password_secret.arn
         ]
       }
